@@ -9,8 +9,6 @@ const cardStyle = {
 
 let validado = 0;
 
-
-
 function Withdraw() {
     const [enviado, setEnviado] = useState(false);
     const [error, setError] = useState("");
@@ -28,6 +26,7 @@ function Withdraw() {
                 return;
             }
 
+            setError("");
             setEnviado(true);
             setUser({...user, balance: user.balance - parseFloat(values.deposit_value)});
         },
@@ -43,6 +42,8 @@ function Withdraw() {
     });
     const handleClearForm = ()=>{
         formik.resetForm();
+        setEnviado(false);
+        setError("");
     }
     const handleCreateNew = ()=>{
         setEnviado(false);
@@ -56,7 +57,7 @@ function Withdraw() {
             formik={formik}
             body={
                 (<>
-                    {error && (
+                    {error && !enviado && (
                         <div className="alert alert-danger" role="alert">
                             {error}
                         </div>
