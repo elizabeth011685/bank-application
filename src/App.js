@@ -12,7 +12,7 @@ import Footer from "./components/footer";
 
 function App() {
     const [user, setUser] = useState({
-        name: 'Elizabeth',
+        name: 'Elizabeth Martinez Solano',
         email: 'elizabeth@hotmail.com',
         password: 'secret',
         balance: 1200
