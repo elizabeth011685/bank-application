@@ -11,10 +11,10 @@ import {useState} from "react";
 
 function App() {
     const [user, setUser] = useState({
-        name: 'Guest',
-        email: '',
-        password: '',
-        balance: 0
+        name: 'Elizabeth',
+        email: 'elizabeth@hotmail.com',
+        password: 'secret',
+        balance: 1200
     });
 
     return (
