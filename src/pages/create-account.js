@@ -1,4 +1,5 @@
 import {useFormik} from "formik";
+import Card from "../components/card";
 const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let validado = 0;
 
@@ -13,7 +14,6 @@ function CreateAccount() {
             password: ''
         },
         onSubmit: values => {
-
             alert("Success");
         },
         validate: values => {
@@ -27,47 +27,46 @@ function CreateAccount() {
         }
     })
     return (
-        <>
-            <div className="d-flex justify-content-center mt-5">
-                <form onSubmit={formik.handleSubmit}>
-                    <div className="card" style={cardStyle}>
-                        <div className="card-header">
-                            <h3>Create Account</h3>
-                        </div>
-                        <div className="card-body">
-
-                            <div className="mb-3">
-                                <input name="name" id="nameField" type="text" onChange={formik.handleChange}
-                                       className="form-control" placeholder="Name" aria-label="Name"
-                                       aria-describedby="addon-wrapping"/>
-                                {formik.errors.name ?
-                                    <div style={{color: 'red'}} id="nameError">{formik.errors.name}</div> : null}
-                            </div>
-
-                            <div className="mb-3">
-                                <input name="email" id="emailField" type="text" onChange={formik.handleChange}
-                                       className="form-control" placeholder="E-mail" aria-label="EMail"
-                                       aria-describedby="addon-wrapping"/>
-                                {formik.errors.email ?
-                                    <div style={{color: 'red'}} id="emailError">{formik.errors.email}</div> : null}
-                            </div>
-
-                            <div className="mb-3">
-
-                                <input name="password" id="pswField" type="text" onChange={formik.handleChange}
-                                       className="form-control" placeholder="Password" aria-label="Password"
-                                       aria-describedby="addon-wrapping"/>
-                                {formik.errors.password ?
-                                    <div style={{color: 'red'}} id="pswError">{formik.errors.password}</div> : null}
-                            </div>
-                        </div>
-                        <div className="card-footer">
-                            <button disabled={validado == 0 || Object.keys(formik.errors).length > 0} type="submit" id="submitBtn" className="btn btn-primary">Create Account</button>
-                        </div>
+        <Card
+            title="Create Account"
+            cardStyle={cardStyle}
+            formik={formik}
+            body={
+                (<>
+                    <div className="mb-3">
+                        <input name="name" id="nameField" type="text" onChange={formik.handleChange}
+                               className="form-control" placeholder="Name" aria-label="Name"
+                               aria-describedby="addon-wrapping"/>
+                        {formik.errors.name ?
+                            <div style={{color: 'red'}} id="nameError">{formik.errors.name}</div> : null}
                     </div>
-                </form>
-            </div>
-        </>
+
+                    <div className="mb-3">
+                        <input name="email" id="emailField" type="text" onChange={formik.handleChange}
+                               className="form-control" placeholder="E-mail" aria-label="EMail"
+                               aria-describedby="addon-wrapping"/>
+                        {formik.errors.email ?
+                            <div style={{color: 'red'}} id="emailError">{formik.errors.email}</div> : null}
+                    </div>
+
+                    <div className="mb-3">
+                        <input name="password" id="pswField" type="text" onChange={formik.handleChange}
+                               className="form-control" placeholder="Password" aria-label="Password"
+                               aria-describedby="addon-wrapping"/>
+                        {formik.errors.password ?
+                            <div style={{color: 'red'}} id="pswError">{formik.errors.password}</div> : null}
+                    </div>
+                </>)
+            }
+            footer={
+                (
+                    <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
+                                id="submitBtn" className="btn btn-primary">
+                        Create Account
+                    </button>
+                )
+            }
+        />
     );
 }
 
