@@ -8,6 +8,7 @@ import Withdraw from "./pages/withdraw";
 import AllData from "./pages/all-data";
 import {UserContext} from "./contexts/UserContext";
 import {useState} from "react";
+import Footer from "./components/footer";
 
 function App() {
     const [user, setUser] = useState({
@@ -31,6 +32,7 @@ function App() {
                             <Route path="/src/pages/all-data" element={<AllData/>} exact/>
                         </Routes>
                     </UserContext.Provider>
+                    <Footer />
                 </div>
             </BrowserRouter>
         </>
