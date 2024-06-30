@@ -2,6 +2,7 @@ import {UserContext} from "../contexts/UserContext";
 import {useFormik} from "formik";
 import Card from "../components/card";
 import {useContext, useState} from "react";
+import {CurrentOptionContext} from "../contexts/CurrentOptionContext";
 const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let validado = 0;
 

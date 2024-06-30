@@ -1,7 +1,8 @@
 import {UserContext} from '../contexts/UserContext';
 import logo from "../logo-24.svg";
 import userImg from "../user.svg";
-import {useContext} from "react";
+import {useContext, useState} from "react";
+import NavItem from "./navItem";
 const logoStyle = {
     marginRight:5,
 };
@@ -9,22 +10,37 @@ const barStyle = {
     backgroundColor: "#e3f2fd",
 };
 
-const nameStyle = {
-    display: "flex",
-    justifyContent: "flex-end",
-    width: "50%",
-};
-
-
 function NavBar() {
-    const { user } = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
-    return(
+    const options = [
+        {
+            href: "/src/pages/create-account",
+            label: "Create Account",
+            className: ["nav-link"]
+        },
+        {
+            href: "/src/pages/deposit",
+            label: "Deposit",
+            className: "nav-link"
+        },
+        {
+            href: "/src/pages/withdraw",
+            label: "Withdraw",
+            className: "nav-link"
+        },
+        {
+            href: "/src/pages/all-data",
+            label: "All Data",
+            className: "nav-link"
+        }
+        ];
+
+
+    return (
         <nav className="navbar navbar-expand-lg navbar-light" style={barStyle}>
             <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    <img src={logo} alt="logo" style={logoStyle}/>
-                    Bad Bank</a>
+                <a className="navbar-brand" href="/"><img src={logo} alt="logo" style={logoStyle}/>Bad Bank</a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,29 +48,23 @@ function NavBar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/src/pages/create-account">Create Account</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/src/pages/deposit">Deposit</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/src/pages/withdraw">Withdraw</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/src/pages/all-data">All Data</a>
-                        </li>
-
+                        {options.map((option, index) => {
+                                let classNames = [];
+                                classNames.push(option.className);
+                                if (option.href === '') {
+                                    classNames.push("active");
+                                }
+                                return <NavItem classNames={classNames.join(" ")} label={option.label} href={option.href} key={index}/>
+                            }
+                        )}
                     </ul>
                 </div>
-
-                    <span className="navbar-text ms-auto">
+                <span className="navbar-text ms-auto">
                         <img src={userImg} alt="logo" style={barStyle}/>
-                        {user.name}
+                    {user.name}
+
                     </span>
             </div>
-
-
         </nav>);
 }
 
