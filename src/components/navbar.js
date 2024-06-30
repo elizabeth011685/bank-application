@@ -1,12 +1,25 @@
+import {UserContext} from '../contexts/UserContext';
 import logo from "../logo-24.svg";
+import userImg from "../user.svg";
+import {useContext} from "react";
 const logoStyle = {
     marginRight:5,
 };
 const barStyle = {
     backgroundColor: "#e3f2fd",
 };
+
+const nameStyle = {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "50%",
+};
+
+
 function NavBar() {
-return(
+    const { user } = useContext(UserContext);
+
+    return(
         <nav className="navbar navbar-expand-lg navbar-light" style={barStyle}>
             <div className="container-fluid">
                 <a className="navbar-brand" href="/">
@@ -33,9 +46,15 @@ return(
                         </li>
 
                     </ul>
-
                 </div>
+
+                    <span className="navbar-text ms-auto">
+                        <img src={userImg} alt="logo" style={barStyle}/>
+                        {user.name}
+                    </span>
             </div>
+
+
         </nav>);
 }
 

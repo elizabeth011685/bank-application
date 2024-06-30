@@ -1,6 +1,7 @@
+import {UserContext} from "../contexts/UserContext";
 import {useFormik} from "formik";
 import Card from "../components/card";
-import {useState} from "react";
+import {useContext, useState} from "react";
 const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let validado = 0;
 
@@ -9,7 +10,8 @@ const cardStyle = {
 };
 function CreateAccount() {
 
-    const [enviado, setEnviado] = useState(false)
+    const [enviado, setEnviado] = useState(false);
+    const { setUser } = useContext(UserContext);
 
     const formik = useFormik({
         initialValues: {
@@ -18,6 +20,7 @@ function CreateAccount() {
             password: ''
         },
         onSubmit: values => {
+            setUser({name:values.name, email:values.email, password:values.password, balance:50});
             setEnviado(true);
         },
         validate: values => {
@@ -34,6 +37,13 @@ function CreateAccount() {
     const handleCreateNew = ()=>{
         setEnviado(false);
         formik.resetForm();
+        setUser({
+            name: 'Guest',
+            email: '',
+            password: '',
+            balance: 0
+        });
+
     }
 
     return (

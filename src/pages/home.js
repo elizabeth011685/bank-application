@@ -1,6 +1,7 @@
 import logo from "../logo.svg";
 
 function Home() {
+
     return (
         <>
             <h1>Welcome to Bad Bank</h1>
