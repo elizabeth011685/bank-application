@@ -45,6 +45,9 @@ function CreateAccount() {
         });
 
     }
+    const handleClearForm = ()=>{
+        formik.resetForm();
+    }
 
     return (
         <Card
@@ -92,15 +95,18 @@ function CreateAccount() {
             footer={
                 (
                     <>
-                        {!enviado && (
-                            <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
-                                    id="submitBtn" className="btn btn-primary">
-                                Create Account
-                            </button>
-                        )}
+                    {!enviado && (
+                        <>
+                        <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
+                                id="submitBtn" className="btn btn-primary">
+                            Create Account
+                        </button>
+                        <button className="btn btn-secondary ml-1" onClick={handleClearForm}>Clear Form</button>
+                        </>
+                )}
 
-                        {enviado && (
-                            <button className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
+            {enviado && (
+                <button className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
                         )}
 
                     </>
