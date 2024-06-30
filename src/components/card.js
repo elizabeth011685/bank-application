@@ -2,7 +2,7 @@
 function Card({title, body, footer, formik, cardStyle}) {
     return (
         <div className="d-flex justify-content-center mt-5">
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={ formik && formik.handleSubmit}>
                 <div className="card" style={cardStyle}>
                     <div className="card-header">
                         <h3>{title}</h3>

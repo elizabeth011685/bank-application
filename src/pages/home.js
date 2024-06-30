@@ -1,12 +1,26 @@
 import logo from "../logo.svg";
-
+import Card from "../components/card";
+const cardStyle = {
+    width: 600+'px'
+};
 function Home() {
 
     return (
-        <>
-            <h1>Welcome to Bad Bank</h1>
-            <img src={logo} alt="logo"/>
-        </>
+        <Card
+            title="Welcome to Bad Bank"
+            cardStyle={cardStyle}
+            body={
+                (<>
+                    <img src={logo} alt="logo"/>
+                </>)
+            }
+            footer={
+                (
+                   <> We are a insecure bank!!!</>
+                )
+            }
+        />
+
     );
 }
 
