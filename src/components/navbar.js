@@ -44,7 +44,9 @@ function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light" style={barStyle}>
             <div className="container-fluid">
-                <Link className="navbar-brand" href="/"><img src={logo} alt="logo" style={logoStyle}/>Bad Bank</Link>
+                <Link className="navbar-brand" to="/">
+                    <img src={logo} alt="logo" style={logoStyle}/>Bad Bank
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
