@@ -1,9 +1,10 @@
+import {Link} from "react-router-dom";
 
 function NavItem({href, classNames, label}) {
 
     return (
         <li className="nav-item">
-            <a className={classNames} href={href} >{label}</a>
+            <Link to={href} className={classNames}>{label}</Link>
         </li>
     );
 }
