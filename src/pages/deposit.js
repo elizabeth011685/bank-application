@@ -75,7 +75,7 @@ function Deposit() {
                                         id="submitBtn" className="btn btn-primary">
                                     Deposit
                                 </button>
-                                <button className="btn btn-secondary ml-1" type="button" onClick={handleClearForm}>Clear Form</button>
+                                <button className="btn btn-secondary ms-1" type="button" onClick={handleClearForm}>Clear Form</button>
                             </>
                         )}
 

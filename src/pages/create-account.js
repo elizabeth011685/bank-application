@@ -102,7 +102,7 @@ function CreateAccount() {
                                 id="submitBtn" className="btn btn-primary">
                             Create Account
                         </button>
-                        <button type="button" className="btn btn-secondary ml-1" onClick={handleClearForm}>Clear Form</button>
+                        <button type="button" className="btn btn-secondary ms-1" onClick={handleClearForm}>Clear Form</button>
                         </>
                 )}
 
