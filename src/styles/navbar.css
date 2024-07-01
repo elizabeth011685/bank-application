@@ -1,0 +1,9 @@
+.nav-item:hover {
+    background-color: #f00;  /* Cambia el color de fondo cuando se pase el cursor sobre el item */
+    color: #fff;  /* Cambia el color del texto del item cuando se pase el cursor sobre el item */
+    transition: all 0.3s ease;  /* Añade una transición suave al cambiar el color */
+}
+
+.navbar-nav .nav-link.active{
+    color: red;
+}

@@ -9,6 +9,7 @@ import AllData from "./pages/all-data";
 import {UserContext} from "./contexts/UserContext";
 import {useState} from "react";
 import Footer from "./components/footer";
+import {CurrentOptionContext} from "./contexts/CurrentOptionContext";
 
 function App() {
     const [user, setUser] = useState({
@@ -18,11 +19,14 @@ function App() {
         balance: 1200
     });
 
+    const [currentOption, setCurrentOption] = useState("/")
+
     return (
         <>
             <BrowserRouter>
                 <div className="App">
                     <UserContext.Provider value={{user, setUser}}>
+                        <CurrentOptionContext.Provider value={{currentOption, setCurrentOption}} >
                         <NavBar/>
                         <Routes>
                             <Route path="/" element={<Home/>} exact/>
@@ -31,6 +35,7 @@ function App() {
                             <Route path="/src/pages/withdraw" element={<Withdraw/>} exact/>
                             <Route path="/src/pages/all-data" element={<AllData/>} exact/>
                         </Routes>
+                        </CurrentOptionContext.Provider>
                     </UserContext.Provider>
                     <Footer />
                 </div>

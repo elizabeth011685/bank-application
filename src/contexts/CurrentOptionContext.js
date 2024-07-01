@@ -1,4 +1,4 @@
 import {createContext} from "react";
-export const CurrentOptionContext = createContext(
-    "/"
+export const CurrentOptionContext = createContext("/",
+    ()=>{}
 );

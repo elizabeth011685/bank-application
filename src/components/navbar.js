@@ -3,6 +3,8 @@ import logo from "../logo-24.svg";
 import userImg from "../user.svg";
 import {useContext, useState} from "react";
 import NavItem from "./navItem";
+import {CurrentOptionContext} from "../contexts/CurrentOptionContext";
+import {Link} from "react-router-dom";
 const logoStyle = {
     marginRight:5,
 };
@@ -12,6 +14,8 @@ const barStyle = {
 
 function NavBar() {
     const {user} = useContext(UserContext);
+    const {currentOption} = useContext(CurrentOptionContext)
+
 
     const options = [
         {
@@ -40,7 +44,7 @@ function NavBar() {
     return (
         <nav className="navbar navbar-expand-lg navbar-light" style={barStyle}>
             <div className="container-fluid">
-                <a className="navbar-brand" href="/"><img src={logo} alt="logo" style={logoStyle}/>Bad Bank</a>
+                <Link className="navbar-brand" href="/"><img src={logo} alt="logo" style={logoStyle}/>Bad Bank</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +55,7 @@ function NavBar() {
                         {options.map((option, index) => {
                                 let classNames = [];
                                 classNames.push(option.className);
-                                if (option.href === '') {
+                                if (option.href === currentOption) {
                                     classNames.push("active");
                                 }
                                 return <NavItem classNames={classNames.join(" ")} label={option.label} href={option.href} key={index}/>
@@ -62,7 +66,6 @@ function NavBar() {
                 <span className="navbar-text ms-auto">
                         <img src={userImg} alt="logo" style={barStyle}/>
                     {user.name}
-
                     </span>
             </div>
         </nav>);

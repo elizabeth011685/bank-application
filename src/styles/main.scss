@@ -1,0 +1,23 @@
+
+$navbar-light-hover-color : #000;
+$navbar-light-brand-color : #000;
+$navbar-light-hover-color : #0b5ed7;
+$navbar-light-active-color : #fff;
+$navbar-light-background-active-color : #0b5ed7;
+$nav-brand-color : #000;
+@import '~bootstrap/scss/bootstrap';
+
+.nav-link {
+  &.active,
+  &.show {
+    background-color: $navbar-light-background-active-color;
+    color: var(--#{$prefix}navbar-active-color);
+    border-radius: 0.375rem;
+  }
+}
+
+.nav-link:hover, .nav-link:focus {
+  background-color: $navbar-light-hover-color;
+  color: var(--#{$prefix}navbar-active-color);
+  border-radius: 0.375rem;
+}
