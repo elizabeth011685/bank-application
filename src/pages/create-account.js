@@ -21,7 +21,7 @@ function CreateAccount() {
             password: ''
         },
         onSubmit: values => {
-            setUser({name:values.name, email:values.email, password:values.password, balance:50});
+            setUser({name:values.name, email:values.email, password:values.password, balance:0});
             setEnviado(true);
         },
         validate: values => {
