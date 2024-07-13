@@ -66,9 +66,9 @@ function NavBar() {
                     </ul>
                 </div>
                 <span className="navbar-text ms-auto">
-                        <img src={userImg} alt="logo" style={barStyle}/>
+                    <img src={userImg} alt="logo" style={barStyle}/>
                     {user.name}
-                    </span>
+                </span>
             </div>
         </nav>);
 }
