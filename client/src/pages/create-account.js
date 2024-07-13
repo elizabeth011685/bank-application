@@ -1,8 +1,9 @@
+import axios from 'axios';
 import {UserContext} from "../contexts/UserContext";
 import {useFormik} from "formik";
 import Card from "../components/card";
 import {useContext, useState} from "react";
-import {CurrentOptionContext} from "../contexts/CurrentOptionContext";
+import {ApiUrlContext} from "../contexts/Context";
 const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let validado = 0;
 
@@ -13,6 +14,7 @@ function CreateAccount() {
 
     const [enviado, setEnviado] = useState(false);
     const { setUser } = useContext(UserContext);
+    const apiURL = useContext(ApiUrlContext);
 
     const formik = useFormik({
         initialValues: {
@@ -20,8 +22,9 @@ function CreateAccount() {
             email: '',
             password: ''
         },
-        onSubmit: values => {
-            setUser({name:values.name, email:values.email, password:values.password, balance:0});
+         onSubmit: async values => {
+            await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
+             setUser({name:values.name, email:values.email, password:values.password, balance:0});
             setEnviado(true);
         },
         validate: values => {
