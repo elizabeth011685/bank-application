@@ -39,12 +39,16 @@ app.get('/', (req, res) => {
 
 //rutas para banco
 
-app.get("/account/create/:name/:email/:password", function (req, res) {
-  res.send({
-    name: req.params.name,
-    email: req.params.email,
+app.get("/account/create/:name/:email/:password", async (req, res) => {
+
+  const user = new User({
+    username: req.params.name,
+    email:  req.params.email,
     password: req.params.password,
   });
+
+  await user.save().then(() => console.log('User created'));
+
 });
 
 // start server
