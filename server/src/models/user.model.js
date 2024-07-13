@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
   balance: {
     type: Number,
   },
+  account_number:{
+    type: Number,
+  },
   role: {
     type: String,
   },
