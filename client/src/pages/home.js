@@ -7,7 +7,7 @@ function Home() {
 
     return (
         <Card
-            title="Welcome to Bad Bank"
+            title="Welcome to Bank Application"
             cardStyle={cardStyle}
             body={
                 (<>
@@ -16,7 +16,7 @@ function Home() {
             }
             footer={
                 (
-                   <> We are a insecure bank!!!</>
+                   <> We are a great bank!!!</>
                 )
             }
         />
