@@ -7,9 +7,10 @@ import CreateAccount from "./pages/create-account";
 import Withdraw from "./pages/withdraw";
 import AllData from "./pages/all-data";
 import {UserContext} from "./contexts/UserContext";
-import {useState} from "react";
+import {useState, createContext} from "react";
 import Footer from "./components/footer";
 import {CurrentOptionContext} from "./contexts/CurrentOptionContext";
+import {ApiUrlContext} from "./contexts/Context";
 
 function App() {
     const [user, setUser] = useState({
@@ -25,21 +26,24 @@ function App() {
         <>
             <BrowserRouter>
                 <div className="App">
-                    <UserContext.Provider value={{user, setUser}}>
-                        <CurrentOptionContext.Provider value={{currentOption, setCurrentOption}} >
-                        <NavBar/>
-                        <Routes>
-                            <Route path="/" element={<Home/>} exact/>
-                            <Route path="/src/pages/create-account" element={<CreateAccount/>} exact/>
-                            <Route path="/src/pages/deposit" element={<Deposit/>} exact/>
-                            <Route path="/src/pages/withdraw" element={<Withdraw/>} exact/>
-                            <Route path="/src/pages/all-data" element={<AllData/>} exact/>
-                        </Routes>
-                        </CurrentOptionContext.Provider>
-                    </UserContext.Provider>
-                    <Footer />
+                    <ApiUrlContext.Provider value="http://localhost:8080">
+                        <UserContext.Provider value={{user, setUser}}>
+                            <CurrentOptionContext.Provider value={{currentOption, setCurrentOption}}>
+                                <NavBar/>
+                                <Routes>
+                                    <Route path="/" element={<Home/>} exact/>
+                                    <Route path="/src/pages/create-account" element={<CreateAccount/>} exact/>
+                                    <Route path="/src/pages/deposit" element={<Deposit/>} exact/>
+                                    <Route path="/src/pages/withdraw" element={<Withdraw/>} exact/>
+                                    <Route path="/src/pages/all-data" element={<AllData/>} exact/>
+                                </Routes>
+                            </CurrentOptionContext.Provider>
+                        </UserContext.Provider>
+                    </ApiUrlContext.Provider>
+                    <Footer/>
                 </div>
             </BrowserRouter>
+
         </>
 
     );
