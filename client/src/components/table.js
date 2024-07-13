@@ -16,10 +16,12 @@ function Table({columns, data}) {
             {
                 data.map((row, index) => (
                     <tr key={index}>
-                        <td >{index + 1}</td>
-                        <td style={{textAlign:"left"}}>{row.username}</td>
-                        <td style={{textAlign:"left"}}>{row.email}</td>
-                        <td style={{textAlign:"left"}}>{row.password}</td>
+                        <td>{index + 1}</td>
+                        <td style={{textAlign: "left"}}>{row.username}</td>
+                        <td style={{textAlign: "left"}}>{row.email}</td>
+                        <td style={{textAlign: "left"}}>{row.password}</td>
+                        <td style={{textAlign: "left"}}>{row.account_number}</td>
+                        <td style={{textAlign: "right"}}>${row.balance.toFixed(2)}</td>
                     </tr>
                 ))
             }

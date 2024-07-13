@@ -6,7 +6,7 @@ import {useContext, useState, useEffect} from "react";
 
 
 const cardStyle = {
-    width: 600+'px'
+    width: 1000+'px'
 };
 
 function AllData() {
@@ -27,7 +27,7 @@ function AllData() {
         users && (<Card title="All data"
                     cardStyle={cardStyle}
                     body={(
-                        <Table columns={["Name", "Email", "Password"]} data={users} />
+                        <Table columns={["Name", "Email", "Password", "Account Number", "Balance"]} data={users} />
                     )}/>)
     }
         </>
