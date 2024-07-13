@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-var dal = require('./dal.js');
+var accountService = require('./services/account.js');
 
 const connectDb = require('./src/database');
 //const faker = require('faker');
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 //rutas para banco
 
 app.get("/account/create/:name/:email/:password",  (req, res) => {
-  dal.create(
+  accountService.create(
       req.params.name,
       req.params.email,
       req.params.password
@@ -51,7 +51,7 @@ app.get("/account/create/:name/:email/:password",  (req, res) => {
 });
 
 app.get("/account/all",  (req, res) => {
-  dal.all().then((accounts) =>{
+  accountService.all().then((accounts) =>{
     console.log(accounts);
     res.send(accounts);
   })
