@@ -16,10 +16,10 @@ function Table({columns, data}) {
             {
                 data.map((row, index) => (
                     <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{row.name}</td>
-                        <td>{row.email}</td>
-                        <td>{row.password}</td>
+                        <td >{index + 1}</td>
+                        <td style={{textAlign:"left"}}>{row.username}</td>
+                        <td style={{textAlign:"left"}}>{row.email}</td>
+                        <td style={{textAlign:"left"}}>{row.password}</td>
                     </tr>
                 ))
             }
