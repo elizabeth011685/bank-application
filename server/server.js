@@ -1,18 +1,18 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const connectDb = require('./src/database');
-const faker = require('faker');
 
-const User = require('./src/models/user.model');
+var dal = require('./dal.js');
+
+const connectDb = require('./src/database');
+//const faker = require('faker');
 
 // configure express to use cors()
 
 app.use(cors());
 
-app.get('/users', async (req, res) => {
+/*app.get('/users', async (req, res) => {
   const users = await User.find();
-
   res.json(users);
 });
 
@@ -32,23 +32,29 @@ app.get('/users-delete', async (req, res) => {
 
   res.send('Users deleted \n');
 });
-
+*/
 app.get('/', (req, res) => {
-  res.send('Hello from Node.js app \n');
+  res.send('Hello from bank app \n');
 });
 
 //rutas para banco
 
-app.get("/account/create/:name/:email/:password", async (req, res) => {
-
-  const user = new User({
-    username: req.params.name,
-    email:  req.params.email,
-    password: req.params.password,
+app.get("/account/create/:name/:email/:password",  (req, res) => {
+  dal.create(
+      req.params.name,
+      req.params.email,
+      req.params.password
+  ).then(user =>{
+    console.log(user);
+    res.send(user);
   });
+});
 
-  await user.save().then(() => console.log('User created'));
-
+app.get("/account/all",  (req, res) => {
+  dal.all().then((accounts) =>{
+    console.log(accounts);
+    res.send(accounts);
+  })
 });
 
 // start server
