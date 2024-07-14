@@ -61,19 +61,6 @@ let validado = 0;
                 .catch(error => {
                     console.log(error);
                 });
-
-            /*axios.post(`${apiURL}/deposit/create/${user.email}/${values.deposit_value}`,
-                {value: parseFloat(values.deposit_value)})
-                .then(response => {
-                    console.log(response.data);
-                    setEnviado(true);
-                    setUser({...user, balance: response.data.balance});
-                })
-                .catch(error => {
-                    console.log(error);
-                });*/
-
-
         },
         validate: values => {
             validado = 1;

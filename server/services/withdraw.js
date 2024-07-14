@@ -1,22 +1,22 @@
-const Deposit = require("../src/models/deposit.model");
+const Withdraw = require("../src/models/withdraw.model");
 const User = require("../src/models/user.model");
 
 async function create(userId,value){
-    const deposit = new Deposit({
+    const withdraw = new Withdraw({
         userId: userId,
         value : parseFloat(value)
     });
-    await deposit.save().then(() => console.log('Deposit created'));
+    await withdraw.save().then(() => console.log('withdraw created'));
     let user =  await User.findOne({_id: userId});
     let balance = parseFloat(user.balance);
-    balance += parseFloat(value);
+    balance -= parseFloat(value);
     user.balance = balance;
     user.save();
     return user;
 }
 
 async function all(){
-    return await Deposit.find();
+    return await Withdraw.find();
 }
 
 module.exports = {create, all};

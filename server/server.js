@@ -9,6 +9,7 @@ const cors = require('cors');
 
 var accountService = require('./services/account.js');
 var depositService = require('./services/deposit.js');
+var withdrawService = require('./services/withdraw.js');
 
 const connectDb = require('./src/database');
 //const faker = require('faker');
@@ -82,6 +83,19 @@ app.post("/account/:user_id/deposit",  async (req, res) => {
       console.log("ACCOUNT: ",account);
       res.send(account);
   });
+});
+
+app.post("/account/:user_id/withdraw",  async (req, res) => {
+    let id = req.params.user_id;
+    let { withdraw_value } = req.body;
+    console.log(id, withdraw_value);
+    await withdrawService.create(
+        id,
+        withdraw_value,
+    ).then((account) =>{
+        console.log("ACCOUNT: ",account);
+        res.send(account);
+    });
 });
 
 // start server
