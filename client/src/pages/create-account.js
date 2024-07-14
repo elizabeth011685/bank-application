@@ -20,7 +20,8 @@ function CreateAccount() {
         initialValues: {
             name: '',
             email: '',
-            password: ''
+            password: '',
+            confirm_password: ''
         },
          onSubmit: async values => {
             await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
@@ -33,6 +34,10 @@ function CreateAccount() {
             if (!values.name) errors.name = "Field required";
             if (!values.email) errors.email = "Field required";
             if (!values.password) errors.password = "Field required";
+            if (values.password && values.password.length < 6) errors.password = "Password must have at least 6 characters";
+            if (!values.confirm_password) errors.confirm_password = "Field required";
+            if (values.password && values.confirm_password && values.password !== values.confirm_password ) errors.confirm_password = "Password not match";
+
             if (values.email && !regex.test(String(values.email).toLowerCase())) errors.email = "Field should be a valid email";
             return errors;
         }
@@ -80,7 +85,7 @@ function CreateAccount() {
                         <input name="email" id="emailField" type="text" onChange={formik.handleChange}
                                value={formik.values.email}
                                readOnly={enviado}
-                               className="form-control" placeholder="E-mail" aria-label="EMail"
+                               className="form-control" placeholder="Email" aria-label="Email"
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                         {formik.errors.email ?
@@ -88,32 +93,47 @@ function CreateAccount() {
                     </div>
 
                     <div className="mb-3">
-                        <input name="password" id="pswField" type="text" onChange={formik.handleChange}
+                        <input name="password" id="pswField" type="password" onChange={formik.handleChange}
                                value={formik.values.password}
                                readOnly={enviado}
                                className="form-control" placeholder="Password" aria-label="Password"
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
-                               {formik.errors.password ?
+                        {formik.errors.password ?
                             <div style={{color: 'red'}} id="pswError">{formik.errors.password}</div> : null}
+                    </div>
+
+                    <div className="mb-3">
+                        <input name="confirm_password" id="pswFieldConfirm" type="password"
+                               onChange={formik.handleChange}
+                               value={formik.values.confirm_password}
+                               readOnly={enviado}
+                               className="form-control" placeholder="Confirm Password" aria-label="Confirm Password"
+                               autoComplete="off"
+                               aria-describedby="addon-wrapping"/>
+                        {formik.errors.confirm_password ?
+                            <div style={{color: 'red'}}
+                                 id="pswConfirmError">{formik.errors.confirm_password}</div> : null}
                     </div>
                 </>)
             }
             footer={
                 (
                     <>
-                    {!enviado && (
-                        <>
-                        <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
-                                id="submitBtn" className="btn btn-primary">
-                            Create Account
-                        </button>
-                        <button type="button" className="btn btn-secondary ms-1" onClick={handleClearForm}>Clear Form</button>
-                        </>
-                )}
+                        {!enviado && (
+                            <>
+                                <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
+                                        id="submitBtn" className="btn btn-primary">
+                                    Create Account
+                                </button>
+                                <button type="button" className="btn btn-secondary ms-1" onClick={handleClearForm}>Clear
+                                    Form
+                                </button>
+                            </>
+                        )}
 
-            {enviado && (
-                <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
+                        {enviado && (
+                            <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
                         )}
 
                     </>
