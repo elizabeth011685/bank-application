@@ -39,7 +39,7 @@ let validado = 0;
  function  Deposit() {
      const apiURL = useContext(ApiUrlContext);
     const [enviado, setEnviado] = useState(false);
-    const { user, setUser } = useContext(UserContext);
+    const { setUser, user } = useContext(UserContext);
     console.log(user);
 
     const formik = useFormik({
@@ -47,8 +47,33 @@ let validado = 0;
             deposit_value: "",
         },
         onSubmit: values => {
-            setEnviado(true);
-            setUser({...user, balance: user.balance + parseFloat(values.deposit_value)});
+
+            axios.post(`${apiURL}/account/${user.id}/deposit`,
+                {
+                    deposit_value: values.deposit_value,
+                    user_id: user.id,
+                })
+                .then(response => {
+                    console.log(response.data);
+                    setEnviado(true);
+                    setUser({...user, balance: response.data.balance});
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            /*axios.post(`${apiURL}/deposit/create/${user.email}/${values.deposit_value}`,
+                {value: parseFloat(values.deposit_value)})
+                .then(response => {
+                    console.log(response.data);
+                    setEnviado(true);
+                    setUser({...user, balance: response.data.balance});
+                })
+                .catch(error => {
+                    console.log(error);
+                });*/
+
+
         },
         validate: values => {
             validado = 1;
