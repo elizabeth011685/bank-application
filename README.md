@@ -72,6 +72,10 @@ npm start
 - Registro de Retiros
 - Consulta de datos de todas las cuentas
 
+## Características Adicionales
+
+- Asignación de un número de cuenta random a cuentas recién creadas
+
 
 ## Licencia
 
