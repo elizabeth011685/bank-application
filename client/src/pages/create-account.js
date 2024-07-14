@@ -50,8 +50,8 @@ function CreateAccount() {
                  setEnviado(true);
 
              }).catch( async (e) => {
-                 let message = e.message.substring(0, e.message.indexOf('.') );
-                     setError(message);
+                    let message = e.message.substring(0, e.message.indexOf('.') );
+                    setError(message);
                  }
              );
 

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import firebase from "../firebase";
 import {UserContext} from "../contexts/UserContext";
 import {useFormik} from "formik";
 import Card from "../components/card";
@@ -11,9 +12,10 @@ let validado = 0;
 const cardStyle = {
     width: 400+'px'
 };
-function CreateAccount() {
+function Login() {
 
     const [enviado, setEnviado] = useState(false);
+    const [error, setError] = useState(null);
     const { setUser } = useContext(UserContext);
     const apiURL = useContext(ApiUrlContext);
 
@@ -23,9 +25,27 @@ function CreateAccount() {
             password: '',
         },
          onSubmit: async values => {
-           // await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
-             setUser({name:values.name, email:values.email, password:values.password, balance:0});
-            setEnviado(true);
+
+             const auth = firebase.auth();
+             const promise = auth.signInWithEmailAndPassword(
+                 values.email,
+                 values.password
+             );
+             promise.then(async (result) => {
+
+                 let response = await axios.get(`${apiURL}/account/get/${values.email}`);
+                 let user = response.data;
+                 setUser({name:user.username, email:user.email, balance:user.balance, account_number: user.account_number});
+                 setEnviado(true);
+                 setError(null);
+
+             })
+                 .catch((e) => {
+                     let message = e.message.substring(0, e.message.indexOf('.') );
+                     setError(message);
+                 });
+
+
         },
         validate: values => {
             validado = 1;
@@ -62,6 +82,12 @@ function CreateAccount() {
                     {enviado && (
                         <div className="alert alert-success" role="alert">
                             Login successfully!
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
                         </div>
                     )}
 
@@ -107,11 +133,6 @@ function CreateAccount() {
                                 </Link>
                             </>
                         )}
-
-                        {enviado && (
-                            <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
-                        )}
-
                     </>
                 )
             }
@@ -119,4 +140,4 @@ function CreateAccount() {
     );
 }
 
-export default CreateAccount;
+export default Login;

@@ -16,4 +16,8 @@ async function all(){
     return await User.find();
 }
 
-module.exports = {create, all};
+async function findByEmail(email){
+    return await User.findOne({email: email});
+}
+
+module.exports = {create, all, findByEmail};

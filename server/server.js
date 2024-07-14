@@ -39,6 +39,14 @@ app.get('/', (req, res) => {
 
 //rutas para banco
 
+app.get('/account/get/:email', (req, res) => {
+  accountService.findByEmail(req.params.email).then((account) =>{
+    console.log(account);
+    res.send(account);
+  });
+});
+
+
 app.get("/account/create/:name/:email/:password",  (req, res) => {
   accountService.create(
       req.params.name,
