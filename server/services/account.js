@@ -20,4 +20,8 @@ async function findByEmail(email){
     return await User.findOne({email: email});
 }
 
-module.exports = {create, all, findByEmail};
+async function findById(id){
+    return await User.findOne({_id: id});
+}
+
+module.exports = {create, all, findByEmail, findById};

@@ -41,6 +41,7 @@ function CreateAccount() {
                  let user = await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
                  console.log(user.data);
                  setUser({
+                     id : user.data._id,
                      name: values.name,
                      email: values.email,
                      password: values.password,

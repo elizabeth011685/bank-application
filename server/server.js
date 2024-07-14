@@ -1,8 +1,14 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+app.use(bodyParser.json());
+app .use(bodyParser.urlencoded({ extended: false }));
+
+
 const cors = require('cors');
 
 var accountService = require('./services/account.js');
+var depositService = require('./services/deposit.js');
 
 const connectDb = require('./src/database');
 //const faker = require('faker');
@@ -63,6 +69,19 @@ app.get("/account/all",  (req, res) => {
     console.log(accounts);
     res.send(accounts);
   })
+});
+
+app.post("/account/:user_id/deposit",  async (req, res) => {
+ let id = req.params.user_id;
+  let { deposit_value } = req.body;
+  console.log(id, deposit_value);
+  await depositService.create(
+      id,
+      deposit_value,
+  ).then((account) =>{
+      console.log("ACCOUNT: ",account);
+      res.send(account);
+  });
 });
 
 // start server
