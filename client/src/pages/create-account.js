@@ -13,7 +13,7 @@ const cardStyle = {
 function CreateAccount() {
 
     const [enviado, setEnviado] = useState(false);
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const apiURL = useContext(ApiUrlContext);
 
     const formik = useFormik({
@@ -24,8 +24,9 @@ function CreateAccount() {
             confirm_password: ''
         },
          onSubmit: async values => {
-            await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
-             setUser({name:values.name, email:values.email, password:values.password, balance:0});
+            let user = await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
+            console.log(user.data);
+            setUser({name:values.name, email:values.email, password:values.password, balance:0, account_number: user.data.account_number });
             setEnviado(true);
         },
         validate: values => {
@@ -50,7 +51,8 @@ function CreateAccount() {
             name: 'Guest',
             email: '',
             password: '',
-            balance: 0
+            balance: 0,
+            account_number:''
         });
 
     }
@@ -74,7 +76,7 @@ function CreateAccount() {
                         <input name="name" id="nameField" type="text" onChange={formik.handleChange}
                                value={formik.values.name}
                                className="form-control" placeholder="Name" aria-label="Name"
-                               readOnly={enviado}
+                               hidden={enviado}
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                         {formik.errors.name ?
@@ -82,9 +84,9 @@ function CreateAccount() {
                     </div>
 
                     <div className="mb-3">
-                        <input name="email" id="emailField" type="text" onChange={formik.handleChange}
+                    <input name="email" id="emailField" type="text" onChange={formik.handleChange}
                                value={formik.values.email}
-                               readOnly={enviado}
+                               hidden={enviado}
                                className="form-control" placeholder="Email" aria-label="Email"
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
@@ -95,7 +97,7 @@ function CreateAccount() {
                     <div className="mb-3">
                         <input name="password" id="pswField" type="password" onChange={formik.handleChange}
                                value={formik.values.password}
-                               readOnly={enviado}
+                               hidden={enviado}
                                className="form-control" placeholder="Password" aria-label="Password"
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
@@ -107,13 +109,18 @@ function CreateAccount() {
                         <input name="confirm_password" id="pswFieldConfirm" type="password"
                                onChange={formik.handleChange}
                                value={formik.values.confirm_password}
-                               readOnly={enviado}
+                               hidden={enviado}
                                className="form-control" placeholder="Confirm Password" aria-label="Confirm Password"
                                autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                         {formik.errors.confirm_password ?
                             <div style={{color: 'red'}}
                                  id="pswConfirmError">{formik.errors.confirm_password}</div> : null}
+                    </div>
+
+                    <div className="mb-3">
+                        <label hidden={!user.account_number} className="form-label">Account Number:</label>
+                        <div><strong>{user.account_number}</strong></div>
                     </div>
                 </>)
             }
