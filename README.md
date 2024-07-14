@@ -49,6 +49,7 @@ npm start
 - Cliente
   - React
   - Bootstrap
+  - React Bootstrap
   - HTML
   - CSS
   - Axios
@@ -62,12 +63,13 @@ npm start
 
 ## Características
 
+- Inicio de Sesión
+- Cierre de sesión
 - Registro de Cuentas
 - Registro de Depósitos
 - Registro de Retiros
 - Consulta de datos de todas las cuentas
-- Inicio de Sesión
-- Cierre de sesión
+
 
 ## Licencia
 
