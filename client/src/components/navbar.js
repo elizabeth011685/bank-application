@@ -19,6 +19,11 @@ function NavBar() {
 
     const options = [
         {
+            href: "/src/pages/login",
+            label: "Login",
+            className: ["nav-link"]
+        },
+        {
             href: "/src/pages/create-account",
             label: "Create Account",
             className: ["nav-link"]

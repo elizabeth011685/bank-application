@@ -11,6 +11,7 @@ import {useState, createContext} from "react";
 import Footer from "./components/footer";
 import {CurrentOptionContext} from "./contexts/CurrentOptionContext";
 import {ApiUrlContext} from "./contexts/Context";
+import Login from "./pages/login";
 
 function App() {
     const [user, setUser] = useState({
@@ -32,6 +33,7 @@ function App() {
                                 <NavBar/>
                                 <Routes>
                                     <Route path="/" element={<Home/>} exact/>
+                                    <Route path="/src/pages/login" element={<Login/>} exact/>
                                     <Route path="/src/pages/create-account" element={<CreateAccount/>} exact/>
                                     <Route path="/src/pages/deposit" element={<Deposit/>} exact/>
                                     <Route path="/src/pages/withdraw" element={<Withdraw/>} exact/>
