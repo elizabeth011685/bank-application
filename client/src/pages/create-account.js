@@ -5,6 +5,7 @@ import {useFormik} from "formik";
 import Card from "../components/card";
 import {useContext, useState} from "react";
 import {ApiUrlContext} from "../contexts/Context";
+import {Link} from "react-router-dom";
 const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 let validado = 0;
 
@@ -84,6 +85,7 @@ function CreateAccount() {
     }
     const handleClearForm = ()=>{
         formik.resetForm();
+        setError(null);
     }
 
     return (
@@ -172,6 +174,16 @@ function CreateAccount() {
 
                         {enviado && (
                             <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another Account</button>
+                        )}
+
+                        {error && (
+
+                            <Link to={"/src/pages/login"}>
+                                <button type="button" className="btn btn-secondary ms-1">
+                                    Login
+                                </button>
+                            </Link>
+
                         )}
 
                     </>
