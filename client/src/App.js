@@ -7,24 +7,17 @@ import CreateAccount from "./pages/create-account";
 import Withdraw from "./pages/withdraw";
 import AllData from "./pages/all-data";
 import {UserContext} from "./contexts/UserContext";
-import {useState, createContext} from "react";
+import {useState} from "react";
 import Footer from "./components/footer";
 import {CurrentOptionContext} from "./contexts/CurrentOptionContext";
 import {ApiUrlContext} from "./contexts/Context";
 import Login from "./pages/login";
 
 function App() {
-    const [user, setUser] = useState({
-        name: 'Elizabeth Martinez Solano',
-        email: 'elizabeth@hotmail.com',
-        password: 'secret',
-        balance: 1200
-    });
-
+    const [user, setUser] = useState(null);
     const [currentOption, setCurrentOption] = useState("/")
 
     return (
-        <>
             <BrowserRouter>
                 <div className="App">
                     <ApiUrlContext.Provider value="http://localhost:8080">
@@ -45,9 +38,6 @@ function App() {
                     <Footer/>
                 </div>
             </BrowserRouter>
-
-        </>
-
     );
 }
 

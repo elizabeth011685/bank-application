@@ -21,27 +21,32 @@ function NavBar() {
         {
             href: "/src/pages/login",
             label: "Login",
-            className: ["nav-link"]
+            className: ["nav-link"],
+            loginRequired : false
         },
         {
             href: "/src/pages/create-account",
             label: "Create Account",
-            className: ["nav-link"]
+            className: ["nav-link"],
+            loginRequired : false
         },
         {
             href: "/src/pages/deposit",
             label: "Deposit",
-            className: "nav-link"
+            className: "nav-link",
+            loginRequired : true
         },
         {
             href: "/src/pages/withdraw",
             label: "Withdraw",
-            className: "nav-link"
+            className: "nav-link",
+            loginRequired : true
         },
         {
             href: "/src/pages/all-data",
             label: "All Data",
-            className: "nav-link"
+            className: "nav-link",
+            loginRequired : true
         }
         ];
 
@@ -60,6 +65,7 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {options.map((option, index) => {
+                            if((option.loginRequired && user) || (!option.loginRequired && !user)){
                                 let classNames = [];
                                 classNames.push(option.className);
                                 if (option.href === currentOption) {
@@ -67,13 +73,19 @@ function NavBar() {
                                 }
                                 return <NavItem classNames={classNames.join(" ")} label={option.label} href={option.href} key={index}/>
                             }
+
+                            }
                         )}
                     </ul>
                 </div>
-                <span className="navbar-text ms-auto">
+
+                {user && (
+                    <span className="navbar-text ms-auto">
                     <img src={userImg} alt="logo" style={barStyle}/>
-                    {user.name}
+                        {user.name} ({user.email})
                 </span>
+                )}
+
             </div>
         </nav>);
 }

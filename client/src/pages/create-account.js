@@ -74,13 +74,7 @@ function CreateAccount() {
     const handleCreateNew = ()=>{
         setEnviado(false);
         formik.resetForm();
-        setUser({
-            name: 'Guest',
-            email: '',
-            password: '',
-            balance: 0,
-            account_number:''
-        });
+        setUser(null);
 
     }
     const handleClearForm = ()=>{
@@ -151,10 +145,16 @@ function CreateAccount() {
                                  id="pswConfirmError">{formik.errors.confirm_password}</div> : null}
                     </div>
 
-                    <div className="mb-3">
-                        <label hidden={!user.account_number} className="form-label">Account Number:</label>
-                        <div><strong>{user.account_number}</strong></div>
-                    </div>
+                    {
+                        user && (
+                            <div className="mb-3">
+                                <label hidden={!user.account_number} className="form-label">Account Number:
+                                <div><strong>{user.account_number}</strong></div>
+                                </label>
+                            </div>
+                        )
+                    }
+
                 </>)
             }
             footer={
@@ -162,7 +162,7 @@ function CreateAccount() {
                     <>
                         {!enviado && (
                             <>
-                                <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
+                            <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
                                         id="submitBtn" className="btn btn-primary">
                                     Create Account
                                 </button>
