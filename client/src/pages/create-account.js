@@ -1,4 +1,5 @@
 import axios from 'axios';
+import firebase from "../firebase";
 import {UserContext} from "../contexts/UserContext";
 import {useFormik} from "formik";
 import Card from "../components/card";
@@ -10,9 +11,11 @@ let validado = 0;
 const cardStyle = {
     width: 400+'px'
 };
+
 function CreateAccount() {
 
     const [enviado, setEnviado] = useState(false);
+    const [error, setError] = useState(null);
     const { user, setUser } = useContext(UserContext);
     const apiURL = useContext(ApiUrlContext);
 
@@ -23,11 +26,34 @@ function CreateAccount() {
             password: '',
             confirm_password: ''
         },
-         onSubmit: async values => {
-            let user = await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
-            console.log(user.data);
-            setUser({name:values.name, email:values.email, password:values.password, balance:0, account_number: user.data.account_number });
-            setEnviado(true);
+         onSubmit:  values => {
+
+             const auth = firebase.auth();
+             const promise = auth.createUserWithEmailAndPassword(
+                 values.email,
+                 values.password
+             );
+             promise.then(async (result) => {
+                 console.log(result);
+                 setError(null);
+
+                 let user = await axios.get(`${apiURL}/account/create/${values.name}/${values.email}/${values.password}`);
+                 console.log(user.data);
+                 setUser({
+                     name: values.name,
+                     email: values.email,
+                     password: values.password,
+                     balance: 0,
+                     account_number: user.data.account_number
+                 });
+                 setEnviado(true);
+
+             }).catch( async (e) => {
+                 let message = e.message.substring(0, e.message.indexOf('.') );
+                     setError(message);
+                 }
+             );
+
         },
         validate: values => {
             validado = 1;
@@ -70,6 +96,11 @@ function CreateAccount() {
                     {enviado && (
                         <div className="alert alert-success" role="alert">
                             Account created successfully!
+                        </div>
+                    )}
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error}
                         </div>
                     )}
                     <div className="mb-3">
