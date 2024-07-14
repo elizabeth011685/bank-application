@@ -16,7 +16,7 @@ function Home() {
             }
             footer={
                 (
-                   <> We are a great bank!!!</>
+                   <> We are a great bank.</>
                 )
             }
         />

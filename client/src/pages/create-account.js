@@ -70,6 +70,7 @@ function CreateAccount() {
                                value={formik.values.name}
                                className="form-control" placeholder="Name" aria-label="Name"
                                readOnly={enviado}
+                               autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                         {formik.errors.name ?
                             <div style={{color: 'red'}} id="nameError">{formik.errors.name}</div> : null}
@@ -80,6 +81,7 @@ function CreateAccount() {
                                value={formik.values.email}
                                readOnly={enviado}
                                className="form-control" placeholder="E-mail" aria-label="EMail"
+                               autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                         {formik.errors.email ?
                             <div style={{color: 'red'}} id="emailError">{formik.errors.email}</div> : null}
@@ -90,6 +92,7 @@ function CreateAccount() {
                                value={formik.values.password}
                                readOnly={enviado}
                                className="form-control" placeholder="Password" aria-label="Password"
+                               autoComplete="off"
                                aria-describedby="addon-wrapping"/>
                                {formik.errors.password ?
                             <div style={{color: 'red'}} id="pswError">{formik.errors.password}</div> : null}

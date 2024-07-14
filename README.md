@@ -1,72 +1,74 @@
 # Bank Application
+<hr>
+<img src="https://img.shields.io/badge/License-MIT-red"></img>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Con ésta aplicación pongo en práctica lo aprendido durante el programa de certificación
+**Desarrollo Full-Stack con MERN de MITxPRO** y tiene como objetivo demostrar 
+el dominio de los conocimientos necesarios para crear desde cero una aplicación en capas 
+utilizando las tecnologías: MongoDB, Express, React y Node.JS para así ser acreedora a la certificación.
 
 
+## Instalación
 
-## Available Scripts
+1.-Clonar repositorio:
 
-In the project directory, you can run:
+```
+git clone https://github.com/elizabeth011685/bank-application.git
+cd bank-application
+```
 
-### `npm start`
+2.- Instalar dependencias del servidor:
+```
+cd server
+npm install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3.-Iniciar servidor en modo desarrollo
+```
+npm start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4.- Instalar dependencias del cliente:
+```
+cd ../client
+npm install
+```
+5.-Iniciar cliente en modo desarrollo
+```
+npm start
+```
 
-### `npm test`
+6.-Abrir la URL: [http://localhost:3000](http://localhost:3000) para ver la aplicación en tu explorador
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Capturas de Pantalla
 
-### `npm run build`
+<img src="BankApplicationResumen.gif">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tecnología Utilizada
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Cliente
+  - React
+  - Bootstrap
+  - HTML
+  - CSS
+  - Axios
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+- Servidor
+  - Node.js
+  - Express
+  - MongoDB
+  - Mongoose
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Características
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Registro de Cuentas
+- Registro de Depósitos
+- Registro de Retiros
+- Consulta de datos de todas las cuentas
+- Inicio de Sesión
+- Cierre de sesión
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Licencia
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[MIT LICENCE](https://github.com/elizabeth011685/bank-application?tab=MIT-1-ov-file#readme)
