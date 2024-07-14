@@ -37,7 +37,7 @@ function Login() {
 
                  let response = await axios.get(`${apiURL}/account/get/${values.email}`);
                  let user = response.data;
-                 setUser({name:user.username, email:user.email, balance:user.balance, account_number: user.account_number});
+                 setUser({id: user._id, name:user.username, email:user.email, balance:user.balance, account_number: user.account_number});
                  setEnviado(true);
                  setError(null);
                  navigate("/");
