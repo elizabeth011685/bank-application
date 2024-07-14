@@ -2,6 +2,10 @@ import Card from "../components/card";
 import {useFormik} from "formik";
 import {useContext, useState} from "react";
 import {UserContext} from "../contexts/UserContext";
+import axios from "axios";
+import {ApiUrlContext} from "../contexts/Context";
+import {useNavigate} from "react-router-dom";
+
 
 const cardStyle = {
     width: 400+'px'
@@ -9,9 +13,34 @@ const cardStyle = {
 
 let validado = 0;
 
-function Deposit() {
+
+/*function validaUsuario(){
+    let navigate = useNavigate();
+    const apiURL = useContext(ApiUrlContext);
+    console.log(user);
+
+    if(!user){
+        navigate("/login");
+        return;
+    }else{
+        let getUser = (async (email)=> {
+            let response = await axios.get(`${apiURL}/account/get/${email}`);
+            return response.data;
+        });
+
+        let userAPI = getUser(user.email);
+
+        setUser({name:userAPI.username, email:userAPI.email, balance:userAPI.balance, account_number: userAPI.account_number});
+
+    }
+}*/
+
+
+ function  Deposit() {
+     const apiURL = useContext(ApiUrlContext);
     const [enviado, setEnviado] = useState(false);
-    const { setUser, user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    console.log(user);
 
     const formik = useFormik({
         initialValues: {
