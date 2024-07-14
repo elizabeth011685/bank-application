@@ -44,7 +44,7 @@ function App() {
     return (
             <BrowserRouter>
                 <div className="App">
-                    <ApiUrlContext.Provider value="http://localhost:8080">
+                    <ApiUrlContext.Provider value={process.env.REACT_APP_API_BASE_URL}>
                         <UserContext.Provider value={{user, setUser}}>
                             <CurrentOptionContext.Provider value={{currentOption, setCurrentOption}}>
                                 <NavBar/>

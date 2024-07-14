@@ -1,50 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const admin = require('./admin');
 const app = express();
-app.use(bodyParser.json());
-app .use(bodyParser.urlencoded({ extended: false }));
-
-
 const cors = require('cors');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 var accountService = require('./services/account.js');
 var depositService = require('./services/deposit.js');
 var withdrawService = require('./services/withdraw.js');
 
 const connectDb = require('./src/database');
-//const faker = require('faker');
 
-// configure express to use cors()
-
-app.use(cors());
-
-/*app.get('/users', async (req, res) => {
-  const users = await User.find();
-  res.json(users);
-});
-
-app.get('/user-create', async (req, res) => {
-  const user = new User({
-    username: faker.internet.userName(),
-    email: faker.internet.email(),
-  });
-
-  await user.save().then(() => console.log('User created'));
-
-  res.send('User created \n');
-});
-
-app.get('/users-delete', async (req, res) => {
-  await User.deleteMany({}).then(() => console.log('Users deleted'));
-
-  res.send('Users deleted \n');
-});
-*/
 app.get('/', (req, res) => {
   res.send('Hello from bank app \n');
 });
 
-//rutas para banco
 
 app.get('/account/get/:email', (req, res) => {
   accountService.findByEmail(req.params.email).then((account) =>{
@@ -66,10 +38,26 @@ app.get("/account/create/:name/:email/:password",  (req, res) => {
 });
 
 app.get("/account/all",  (req, res) => {
-  accountService.all().then((accounts) =>{
-    console.log(accounts);
-    res.send(accounts);
-  })
+
+    let idToken = null;
+    if(req.headers.authorization.startsWith('Bearer ') && req.headers.authorization) {
+        idToken = req.headers.authorization.split(' ')[1]
+    }
+
+    if (!idToken) {
+        res.status(401).send();
+        return
+    }
+
+    admin.auth().verifyIdToken(idToken)
+        .then(function(decodedToken) {
+            accountService.all().then((accounts) =>{
+                res.send(accounts);
+            })
+        }).catch(function(error) {
+        res.status(401).send("Token invalid");
+    });
+    
 });
 
 app.post("/account/:user_id/deposit",  async (req, res) => {
