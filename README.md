@@ -42,7 +42,7 @@ npm start
 
 ## Capturas de Pantalla
 
-<img src="BankApplicationResumen.gif">
+<img src="BankApplicationResumen2.gif">
 
 ## Tecnología Utilizada
 
@@ -53,6 +53,8 @@ npm start
   - HTML
   - CSS
   - Axios
+  - Formik
+  - Firebase
 
 
 - Servidor
