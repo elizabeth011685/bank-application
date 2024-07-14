@@ -21,7 +21,7 @@ function Table({columns, data}) {
                         <td style={{textAlign: "left"}}>{row.email}</td>
                         <td style={{textAlign: "left"}}>{row.password}</td>
                         <td style={{textAlign: "left"}}>{row.account_number}</td>
-                        <td style={{textAlign: "right"}}>${row.balance.toFixed(2)}</td>
+                        <td style={{textAlign: "right"}}>${row.balance.toLocaleString()}</td>
                     </tr>
                 ))
             }

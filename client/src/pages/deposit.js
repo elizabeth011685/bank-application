@@ -5,6 +5,7 @@ import {UserContext} from "../contexts/UserContext";
 import axios from "axios";
 import {ApiUrlContext} from "../contexts/Context";
 import {useNavigate} from "react-router-dom";
+import firebase from "../firebase";
 
 
 const cardStyle = {
@@ -14,121 +15,130 @@ const cardStyle = {
 let validado = 0;
 
 
-/*function validaUsuario(){
-    let navigate = useNavigate();
-    const apiURL = useContext(ApiUrlContext);
-    console.log(user);
+var token = null;
 
-    if(!user){
-        navigate("/login");
-        return;
-    }else{
-        let getUser = (async (email)=> {
-            let response = await axios.get(`${apiURL}/account/get/${email}`);
-            return response.data;
-        });
-
-        let userAPI = getUser(user.email);
-
-        setUser({name:userAPI.username, email:userAPI.email, balance:userAPI.balance, account_number: userAPI.account_number});
-
+firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+    if(firebaseUser){
+        firebase.auth().currentUser.getIdToken()
+            .then(idToken => {
+                token = idToken;
+            }).catch(e => console.log('e:', e));
     }
-}*/
+    else{
+        console.log('User is not logged in');
+    }
+});
 
 
  function  Deposit() {
      const apiURL = useContext(ApiUrlContext);
-    const [enviado, setEnviado] = useState(false);
-    const { setUser, user } = useContext(UserContext);
-    console.log(user);
+     const [enviado, setEnviado] = useState(false);
+     const {setUser, user} = useContext(UserContext);
 
-    const formik = useFormik({
-        initialValues: {
-            deposit_value: "",
-        },
-        onSubmit: values => {
 
-            axios.post(`${apiURL}/account/${user.id}/deposit`,
-                {
-                    deposit_value: values.deposit_value,
-                    user_id: user.id,
-                })
-                .then(response => {
-                    console.log(response.data);
-                    setEnviado(true);
-                    setUser({...user, balance: response.data.balance});
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-        validate: values => {
-            validado = 1;
-            let errors = {};
-            if (!values.deposit_value) errors.deposit_value = "Field required";
-            if ( isNaN(values.deposit_value)) errors.deposit_value = "Enter positive numbers only";
-            if ( parseFloat(values.deposit_value) < 0) errors.deposit_value = "Enter positive numbers only";
-            return errors;
-        }
-    });
-    const handleClearForm = ()=>{
-        formik.resetForm();
-    }
-    const handleCreateNew = ()=>{
-        setEnviado(false);
-        formik.resetForm();
-    }
-    return (
-        <Card
-            title="Deposit"
-            cardStyle={cardStyle}
-            formik={formik}
-            body={
-                (<>
-                    {enviado && (
-                        <div className="alert alert-success" role="alert">
-                            Deposit created successfully!
-                        </div>
-                    )}
+     const formik = useFormik({
+         initialValues: {
+             deposit_value: "",
+         },
+         onSubmit: values => {
 
-                    <div className="mb-3">
-                         Current account balance: $ {user.balance.toLocaleString()}
+             axios.post(`${apiURL}/account/${user.id}/deposit`,
+                 {
+                     deposit_value: values.deposit_value,
+                     user_id: user.id,
+                 }, {
+                     headers: {
+                         'Authorization': `Bearer ${token}`
+                     }}).then(response => {
+                     console.log(response.data);
+                     setEnviado(true);
+                     setUser({...user, balance: response.data.balance});
+                 })
+                 .catch(error => {
+                     console.log(error);
+                 });
+         },
+         validate: values => {
+             validado = 1;
+             let errors = {};
+             if (!values.deposit_value) errors.deposit_value = "Field required";
+             if (isNaN(values.deposit_value)) errors.deposit_value = "Enter positive numbers only";
+             if (parseFloat(values.deposit_value) < 0) errors.deposit_value = "Enter positive numbers only";
+             return errors;
+         }
+     });
+     const handleClearForm = () => {
+         formik.resetForm();
+     }
+     const handleCreateNew = () => {
+         setEnviado(false);
+         formik.resetForm();
+     }
+     return firebase.auth().currentUser ? (
+
+         <Card
+             title="Deposit"
+             cardStyle={cardStyle}
+             formik={formik}
+             body={
+                 (<>
+                     {enviado && (
+                         <div className="alert alert-success" role="alert">
+                             Deposit created successfully!
+                         </div>
+                     )}
+                     {
+                         (
+                             <>
+                             <div className="mb-3">
+                                Current account balance: $ {user.balance.toLocaleString()}
+                             </div>
+
+                         <div className="mb-3">
+                         <input name="deposit_value" id="depositField" type="text" onChange={formik.handleChange}
+                     value={formik.values.deposit_value}
+                     className="form-control" placeholder="Deposit" aria-label="Deposit"
+                     readOnly={enviado}
+                     aria-describedby="addon-wrapping"/>
+             {formik.errors.deposit_value ?
+                 <div style={{color: 'red'}} id="nameError">{formik.errors.deposit_value}</div> : null}
                     </div>
+                             </>)
+                     }
 
-                    <div className="mb-3">
-                        <input name="deposit_value" id="depositField" type="text" onChange={formik.handleChange}
-                               value={formik.values.deposit_value}
-                               className="form-control" placeholder="Deposit" aria-label="Deposit"
-                               readOnly={enviado}
-                               aria-describedby="addon-wrapping"/>
-                        {formik.errors.deposit_value ?
-                            <div style={{color: 'red'}} id="nameError">{formik.errors.deposit_value}</div> : null}
-                    </div>
+                 </>)
+             }
+             footer={
+                 (
+                     <>
+                         {!enviado && (
+                             <>
+                                 <button disabled={validado === 0 || Object.keys(formik.errors).length > 0}
+                                         type="submit"
+                                         id="submitBtn" className="btn btn-primary">
+                                     Deposit
+                                 </button>
+                                 <button className="btn btn-secondary ms-1" type="button"
+                                         onClick={handleClearForm}>Clear Form
+                                 </button>
+                             </>
+                         )}
 
-                </>)
-            }
-            footer={
-                (
-                    <>
-                        {!enviado && (
-                            <>
-                                <button disabled={validado === 0 || Object.keys(formik.errors).length > 0} type="submit"
-                                        id="submitBtn" className="btn btn-primary">
-                                    Deposit
-                                </button>
-                                <button className="btn btn-secondary ms-1" type="button" onClick={handleClearForm}>Clear Form</button>
-                            </>
-                        )}
+                         {enviado && (
+                             <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another
+                                 Deposit</button>
+                         )}
 
-                        {enviado && (
-                            <button type="button" className="btn btn-primary" onClick={handleCreateNew}>Create Another Deposit</button>
-                        )}
+                     </>
+                 )
+             }
+         />
+     ) :
+     (<div className="alert alert-danger" role="alert">
+         Unauthorized area
+     </div>)
 
-                    </>
-                )
-            }
-        />
-    );
-}
+         ;
+ }
 
 export default Deposit;

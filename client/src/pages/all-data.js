@@ -6,12 +6,6 @@ import {useContext, useState, useEffect} from "react";
 import firebase from "../firebase";
 import {useNavigate} from "react-router-dom";
 
-/*onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const token = await getIdToken(user);
-    }
-});*/
-
 var token = null;
 
 firebase.auth().onAuthStateChanged(async (firebaseUser) => {
@@ -35,7 +29,6 @@ function AllData() {
     const [users, setUsers] = useState(null);
     const apiURL = useContext(ApiUrlContext);
     let navigate = useNavigate();
-
 
     useEffect(() => {
         const fetchData = async () =>{

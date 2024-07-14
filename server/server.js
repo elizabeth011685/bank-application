@@ -57,33 +57,73 @@ app.get("/account/all",  (req, res) => {
         }).catch(function(error) {
         res.status(401).send("Token invalid");
     });
-    
+
 });
 
 app.post("/account/:user_id/deposit",  async (req, res) => {
- let id = req.params.user_id;
+
+    let id = req.params.user_id;
   let { deposit_value } = req.body;
   console.log(id, deposit_value);
-  await depositService.create(
-      id,
-      deposit_value,
-  ).then((account) =>{
-      console.log("ACCOUNT: ",account);
-      res.send(account);
-  });
+
+    let idToken = null;
+    if(req.headers.authorization.startsWith('Bearer ') && req.headers.authorization) {
+        idToken = req.headers.authorization.split(' ')[1]
+    }
+
+    if (!idToken) {
+        res.status(401).send();
+        return
+    }
+
+    admin.auth().verifyIdToken(idToken)
+        .then(async function(decodedToken) {
+            await depositService.create(
+                id,
+                deposit_value,
+            ).then((account) =>{
+                console.log("ACCOUNT: ",account);
+                res.send(account);
+            });
+        }).catch(function(error) {
+        res.status(401).send("Token invalid");
+    });
+
+
+
 });
 
 app.post("/account/:user_id/withdraw",  async (req, res) => {
     let id = req.params.user_id;
     let { withdraw_value } = req.body;
     console.log(id, withdraw_value);
-    await withdrawService.create(
-        id,
-        withdraw_value,
-    ).then((account) =>{
-        console.log("ACCOUNT: ",account);
-        res.send(account);
+
+
+    let idToken = null;
+    if(req.headers.authorization.startsWith('Bearer ') && req.headers.authorization) {
+        idToken = req.headers.authorization.split(' ')[1]
+    }
+
+    if (!idToken) {
+        res.status(401).send();
+        return
+    }
+
+    admin.auth().verifyIdToken(idToken)
+        .then(async function(decodedToken) {
+            await withdrawService.create(
+                id,
+                withdraw_value,
+            ).then((account) =>{
+                console.log("ACCOUNT: ",account);
+                res.send(account);
+            });
+        }).catch(function(error) {
+        res.status(401).send("Token invalid");
     });
+
+
+
 });
 
 // start server

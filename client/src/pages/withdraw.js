@@ -4,12 +4,27 @@ import {useContext, useState} from "react";
 import {UserContext} from "../contexts/UserContext";
 import axios from "axios";
 import {ApiUrlContext} from "../contexts/Context";
+import firebase from "../firebase";
 
 const cardStyle = {
     width: 400+'px'
 };
 
 let validado = 0;
+
+var token = null;
+
+firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+    if(firebaseUser){
+        firebase.auth().currentUser.getIdToken()
+            .then(idToken => {
+                token = idToken;
+            }).catch(e => console.log('e:', e));
+    }
+    else{
+        console.log('User is not logged in');
+    }
+});
 
 function Withdraw() {
     const [enviado, setEnviado] = useState(false);
@@ -34,7 +49,10 @@ function Withdraw() {
                 {
                     withdraw_value: values.withdraw_value,
                     user_id: user.id,
-                })
+                },{
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }})
                 .then(response => {
                     console.log(response.data);
                     setEnviado(true);
@@ -66,7 +84,7 @@ function Withdraw() {
         setEnviado(false);
         formik.resetForm();
     }
-    return (
+    return firebase.auth().currentUser ? (
 
     <Card
             title="Withdraw"
@@ -122,7 +140,10 @@ function Withdraw() {
                 )
             }
         />
-    );
+    ) :
+        (<div className="alert alert-danger" role="alert">
+            Unauthorized area
+        </div>);
 }
 
 export default Withdraw;
