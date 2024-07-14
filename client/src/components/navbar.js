@@ -1,10 +1,11 @@
 import {UserContext} from '../contexts/UserContext';
 import logo from "../logo-24.svg";
-import userImg from "../user.svg";
+import firebase from "../firebase";
 import {useContext, useState} from "react";
 import NavItem from "./navItem";
 import {CurrentOptionContext} from "../contexts/CurrentOptionContext";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
 const logoStyle = {
     marginRight:5,
 };
@@ -13,8 +14,16 @@ const barStyle = {
 };
 
 function NavBar() {
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const {currentOption} = useContext(CurrentOptionContext)
+    let navigate = useNavigate();
+
+    let logout= ()=>{
+        firebase.auth().signOut();
+        setUser(null);
+        navigate("/src/pages/login");
+
+    }
 
 
     const options = [
@@ -65,25 +74,31 @@ function NavBar() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         {options.map((option, index) => {
-                            if((option.loginRequired && user) || (!option.loginRequired && !user)){
-                                let classNames = [];
-                                classNames.push(option.className);
-                                if (option.href === currentOption) {
-                                    classNames.push("active");
+                                if ((option.loginRequired && user) || (!option.loginRequired && !user)) {
+                                    let classNames = [];
+                                    classNames.push(option.className);
+                                    if (option.href === currentOption) {
+                                        classNames.push("active");
+                                    }
+                                    return <NavItem classNames={classNames.join(" ")} label={option.label}
+                                                    href={option.href} key={index}/>
                                 }
-                                return <NavItem classNames={classNames.join(" ")} label={option.label} href={option.href} key={index}/>
-                            }
 
                             }
                         )}
+
                     </ul>
                 </div>
 
                 {user && (
-                    <span className="navbar-text ms-auto">
-                    <img src={userImg} alt="logo" style={barStyle}/>
-                        {user.name} ({user.email})
-                </span>
+                    <Dropdown>
+                        <Dropdown.Toggle variant="outline-primary" id="dropdown-basic">
+                            {user.name} ({user.email})
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={logout} >Logout</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 )}
 
             </div>
