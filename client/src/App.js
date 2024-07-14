@@ -38,7 +38,7 @@ function App() {
     const loginElem = useMemo(() => <Login />, []);
     const createAccountElem = useMemo(() => <CreateAccount />, []);
     const depositElem = useMemo(() => <Deposit />, []);
-    const withDrawElement = useMemo(() => <Withdraw />, []);
+    const withdrawElement = useMemo(() => <Withdraw />, []);
     const allDataElement = useMemo(() => <AllData />, []);
 
     return (
@@ -53,7 +53,7 @@ function App() {
                                     <Route path="/src/pages/login" element={loginElem} exact/>
                                     <Route path="/src/pages/create-account" element={createAccountElem} exact/>
                                     <Route path="/src/pages/deposit" element={depositElem} exact/>
-                                    <Route path="/src/pages/withdraw" element={withDrawElement} exact/>
+                                    <Route path="/src/pages/withdraw" element={withdrawElement} exact/>
                                     <Route path="/src/pages/all-data" element={allDataElement} exact/>
                                 </Routes>
                             </CurrentOptionContext.Provider>
